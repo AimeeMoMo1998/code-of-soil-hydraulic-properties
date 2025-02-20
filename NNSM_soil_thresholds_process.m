@@ -86,7 +86,7 @@
      theta0_all(count_all<=10) = NaN;
      psm_all(count_all<=10) = NaN;
      
-     fname = ['NNsm_tauL_fullpro_f3_',num2str(yrlist(yr)),'.mat'];
+     fname = ['NNsm_tauL_fullpro_f1_',num2str(yrlist(yr)),'.mat'];
      save(fname, 'thetaf_all','psm_all','R2_all','count_all','theta0_all')
      
  end
@@ -101,7 +101,7 @@
  theta0_allyr = [];
  for yr = 1:length(yrlist)
      disp(yrlist(yr))
-     load([data_prefix,'NNsm_tauL_fullpro_f3_',...
+     load([data_prefix,'NNsm_tauL_fullpro_f1_',...
            num2str(yrlist(yr)),'.mat'],'thetaf_all','psm_all','theta0_all');
              
      thetaf_allyr = cat(3,thetaf_allyr,thetaf_all);
@@ -122,14 +122,14 @@
  theta0_95prc = prctile(theta0_allyr, 95, 3);
 
  
- save NNsm_thetafc_statistics_f3.mat thetaf_std thetaf_cv thetaf_5prc ...
+ save NNsm_thetafc_statistics_f1.mat thetaf_std thetaf_cv thetaf_5prc ...
                                   psm_std psm_cv psm_95prc ...
                                   theta0_std theta0_cv theta0_95prc
  %% replace thetaf_median with thetaf_5prc over humid regions, and 
   % thetac_median with thetac_95prc over arid regions
   % AI = Rn/(lamuda*P); AI <0.2 for arid regions; AI>=0.65 for humid region
 
-  load('./NNSM_22year_soil_thresholds_f3.mat','thetaf_allyr_median','thetac_allyr_median')
+  load('./NNSM_22year_soil_thresholds_f1.mat','thetaf_allyr_median','thetac_allyr_median')
   
   thetaf = thetaf_allyr_median;
   thetac = thetac_allyr_median;
@@ -137,7 +137,7 @@
 load('AI_mean_era5.mat')
 thetaf(AI>=0.65)=thetaf_5prc(AI>=0.65);
 thetac(AI<0.2)=psm_95prc(AI<0.2);
- save ./NNsm_soil_thresholds_f3.mat thetaf thetac
+ save ./NNsm_soil_thresholds_f1.mat thetaf thetac
  
  
  
